@@ -8,3 +8,10 @@ Run:
 
 ```bash
 docker build -t gow/chiaki-ng .
+```
+
+Optional base image:
+
+```bash
+docker build --build-arg BASE_APP_IMAGE=gow/base-app -t gow/chiaki-ng .
+```
