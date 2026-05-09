@@ -20,6 +20,7 @@ ARG REQUIRED_PACKAGES=" \
     libnotify4 \
     xdg-utils \
     libsecret-1-0 \
+    libglew-dev \
     curl \
     unzip \
     p7zip-full \
