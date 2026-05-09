@@ -6,7 +6,7 @@ FROM ${BASE_APP_IMAGE}
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-WORKDIR /home/retro
+WORKDIR /opt
 
 RUN <<_INSTALL_CHIAKI-NG
 #!/bin/bash

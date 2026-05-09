@@ -2,4 +2,4 @@
 set -e
 
 source /opt/gow/launch-comp.sh
-launcher /home/retro/chiaki --appimage-extract ${CHIAKI_STARTUP_FLAGS}
+launcher /opt/chiaki --appimage-extract ${CHIAKI_STARTUP_FLAGS}
