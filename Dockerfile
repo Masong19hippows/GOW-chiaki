@@ -29,7 +29,7 @@ ARG REQUIRED_PACKAGES=" \
     gstreamer1.0-plugins-base:i386 gstreamer1.0-plugins-good:i386 gstreamer1.0-plugins-bad:i386 gstreamer1.0-plugins-ugly:i386 gstreamer1.0-libav:i386 \
     tar \
     wget \
-    usbutils curl \
+    usbutils curl sed \
     ca-certificates \
     xz-utils \
     "
