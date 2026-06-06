@@ -31,11 +31,13 @@ SERVICE="virtualhereclient"
 docker events \
   --filter "container=$CONTAINER" \
   --filter "event=start" \
-  --filter "event=stop" |
+  --filter "event=stop" \
+  --filter "event=die" |
 while read -r event; do
     if echo "$event" | grep -q "start"; then
         systemctl start "$SERVICE"
-    elif echo "$event" | grep -q "stop"; then
+
+    elif echo "$event" | grep -qE "stop|die"; then
         systemctl stop "$SERVICE"
     fi
 done
