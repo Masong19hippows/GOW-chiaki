@@ -21,3 +21,10 @@ docker build --build-arg BASE_APP_IMAGE=gow/base-app -t gow/chiaki-ng .
 Virtualhere:
 
 If /opt/vhui.conf is mounted in the container with a virtualhere config file, then virtualhere will be ran with the chosen config.
+
+Host machine must have vhci_hcd loaded. 
+
+Can be loaded with:
+```bash
+sudo modprobe vhci_hcd
+```

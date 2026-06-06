@@ -4,7 +4,7 @@ ARG BASE_APP_IMAGE=ghcr.io/games-on-whales/base-app:edge
 # hadolint ignore=DL3006
 FROM ${BASE_APP_IMAGE}
 
-ARG DEBIAN_FRONTEND=noninteractive
+# ARG DEBIAN_FRONTEND=noninteractive
 
 ARG REQUIRED_PACKAGES=" \
     libfreetype6:i386 \
@@ -29,6 +29,7 @@ ARG REQUIRED_PACKAGES=" \
     gstreamer1.0-plugins-base:i386 gstreamer1.0-plugins-good:i386 gstreamer1.0-plugins-bad:i386 gstreamer1.0-plugins-ugly:i386 gstreamer1.0-libav:i386 \
     tar \
     wget \
+    usbutils curl \
     ca-certificates \
     xz-utils \
     "
@@ -53,8 +54,16 @@ _INSTALL_CHIAKI-NG
 
 COPY --chmod=777 scripts/startup.sh /opt/gow/startup-app.sh
 
-RUN wget "https://www.virtualhere.com/sites/default/files/usbclient/vhclientx86_64"
-RUN chmod +x ./vhclientx86_64
+RUN bash -euxo pipefail
+
+RUN <<_INSTALL_VIRTUALHERE
+#!/bin/bash
+
+curl -fsSL https://www.virtualhere.com/sites/default/files/usbclient/vhclientx86_64 -o /opt/vhclientx86_64
+chmod +x /opt/vhclientx86_64
+
+_INSTALL_VIRTUALHERE
+
 ENV XDG_RUNTIME_DIR=/tmp/.X11-unix
 
 ARG IMAGE_SOURCE
