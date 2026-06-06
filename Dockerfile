@@ -40,8 +40,6 @@ RUN dpkg --add-architecture i386 && \
 
 WORKDIR /opt
 
-
-
 RUN <<_INSTALL_CHIAKI-NG
 #!/bin/bash
 set -e
