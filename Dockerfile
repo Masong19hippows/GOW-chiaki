@@ -29,7 +29,6 @@ ARG REQUIRED_PACKAGES=" \
     gstreamer1.0-plugins-base:i386 gstreamer1.0-plugins-good:i386 gstreamer1.0-plugins-bad:i386 gstreamer1.0-plugins-ugly:i386 gstreamer1.0-libav:i386 \
     tar \
     wget \
-    usbutils curl sed \
     ca-certificates \
     xz-utils \
     "
@@ -55,20 +54,6 @@ _INSTALL_CHIAKI-NG
 COPY --chmod=777 scripts/startup.sh /opt/gow/startup-app.sh
 
 RUN bash -euxo pipefail
-
-RUN <<_INSTALL_VIRTUALHERE
-#!/bin/bash
-
-curl -fsSL https://www.virtualhere.com/sites/default/files/usbclient/vhclientx86_64 -o /opt/vhclientx86_64
-chmod +x /opt/vhclientx86_64
-
-sed -i '/^exec gosu .*\/opt\/gow\/startup\.sh/i \
-if [[ -f "/opt/vhui.conf" ]]; then \
-    /opt/vhclientx86_64 -n -c "/opt/vhui.conf" \
-fi \
-' /entrypoint.sh
-
-_INSTALL_VIRTUALHERE
 
 ENV XDG_RUNTIME_DIR=/tmp/.X11-unix
 

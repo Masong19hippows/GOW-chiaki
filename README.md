@@ -4,8 +4,6 @@ This dockerfile builds a container to be used with game-on-whales using the Chia
 
 https://github.com/streetpea/chiaki-ng
 
-Also contains a virtualhere client to connect dualsense controllers.
-
 Run:
 
 ```bash
@@ -20,11 +18,55 @@ docker build --build-arg BASE_APP_IMAGE=gow/base-app -t gow/chiaki-ng .
 
 Virtualhere:
 
-If /opt/vhui.conf is mounted in the container with a virtualhere config file, then virtualhere will be ran with the chosen config.
+This container can be ran with virtualhere for seamless passthrough of dualsense controllers.
 
-Host machine must have vhci_hcd loaded. 
+Create script at `/usr/local/bin/wolfchiaki-watch.sh` with:
 
-Can be loaded with:
 ```bash
-sudo modprobe vhci_hcd
+#!/bin/bash
+
+CONTAINER="WolfChiaki"
+SERVICE="virtualhereclient"
+
+docker events \
+  --filter "container=$CONTAINER" \
+  --filter "event=start" \
+  --filter "event=stop" |
+while read -r event; do
+    if echo "$event" | grep -q "start"; then
+        systemctl start "$SERVICE"
+    elif echo "$event" | grep -q "stop"; then
+        systemctl stop "$SERVICE"
+    fi
+done
+```
+
+Then make executable with:
+
+```bash
+chmod +x /usr/local/bin/wolfchiaki-watch.sh
+```
+
+Then create service file at `/etc/systemd/system/wolfchiaki-watch.service` with:
+
+```bash
+[Unit]
+Description=Watch WolfChiaki Docker container and control service
+After=docker.service
+Requires=docker.service
+
+[Service]
+ExecStart=/usr/local/bin/wolfchiaki-watch.sh
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable and start:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now wolfchiaki-watch.service
 ```
