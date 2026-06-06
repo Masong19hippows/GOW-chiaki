@@ -4,6 +4,8 @@ This dockerfile builds a container to be used with game-on-whales using the Chia
 
 https://github.com/streetpea/chiaki-ng
 
+Also contains a virtualhere client to connect dualsense controllers.
+
 Run:
 
 ```bash
@@ -15,3 +17,8 @@ Optional base image:
 ```bash
 docker build --build-arg BASE_APP_IMAGE=gow/base-app -t gow/chiaki-ng .
 ```
+
+Virtualhere:
+
+If docker container is ran with enviroment variable VIRTUALHERE_CONF_FILE,
+virtualhere is ran with a config file taken from the variable.

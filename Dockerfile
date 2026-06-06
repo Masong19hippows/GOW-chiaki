@@ -40,6 +40,8 @@ RUN dpkg --add-architecture i386 && \
 
 WORKDIR /opt
 
+
+
 RUN <<_INSTALL_CHIAKI-NG
 #!/bin/bash
 set -e
@@ -51,6 +53,8 @@ _INSTALL_CHIAKI-NG
 
 COPY --chmod=777 scripts/startup.sh /opt/gow/startup-app.sh
 
+RUN wget "https://www.virtualhere.com/sites/default/files/usbclient/vhclientx86_64"
+RUN chmod +x ./vhclientx86_64
 ENV XDG_RUNTIME_DIR=/tmp/.X11-unix
 
 ARG IMAGE_SOURCE
