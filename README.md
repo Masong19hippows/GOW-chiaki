@@ -20,5 +20,4 @@ docker build --build-arg BASE_APP_IMAGE=gow/base-app -t gow/chiaki-ng .
 
 Virtualhere:
 
-If docker container is ran with enviroment variable VIRTUALHERE_CONF_FILE,
-virtualhere is ran with a config file taken from the variable.
+If /opt/vhui.conf is mounted in the container with a virtualhere config file, then virtualhere will be ran with the chosen config.
